@@ -85,15 +85,14 @@ describe('PropertiesController Unit Test', () => {
       perPage: 5,
     };
 
-    expect(await controller.findAll(filters, paginationOptions)).toMatchObject({
-      properties: [
-        {
-          id: expect.any(Number),
-          ...mockProperty,
-        },
-      ],
-      response: expect.stringContaining('Sucessfull response'),
+    expect(await controller.findAll(filters, paginationOptions)).toEqual({
+      properties: expect.any(Array),
+      currentPage: paginationOptions.page,
+      perPage: paginationOptions.perPage,
+      response: 'Sucessfull response',
       status: 200,
+      totalItems: 11,
+      lastPage: 3,
     });
   });
 

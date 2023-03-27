@@ -92,7 +92,7 @@ export class PropertiesController {
       const response = {
         properties: property,
         status: 200,
-        response: 'Sucessfull response',
+        response: 'Property updated with success',
       };
 
       return response;
