@@ -50,12 +50,10 @@ export class PropertiesController {
       };
       return response;
     } catch (error: any) {
-      const err = JSON.parse(error.message);
-
       const response = {
         status: 400,
         response: `An error occurred while find properties`,
-        error: err,
+        error: error,
       };
       return response;
     }
@@ -102,11 +100,10 @@ export class PropertiesController {
 
       return response;
     } catch (error: any) {
-      const err = JSON.parse(error.message);
       const response = {
         status: 400,
         response: `An error occurred while updating a property`,
-        error: err,
+        error,
       };
       return response;
     }

@@ -31,13 +31,13 @@ export class ExpressAdapter implements HttpServer {
       const { perPage, page, price, bedrooms, bathrooms, ...rest } = req.query;
 
       const paginationOptions = {
-        perPage: Number(perPage) || 10,
-        page: Number(page) || 1,
+        perPage: (perPage && Number(perPage)) || 10,
+        page: (page && Number(page)) || 1,
       };
       const filters = {
-        price: Number(price) || undefined,
-        bedrooms: Number(bedrooms) || undefined,
-        bathrooms: Number(bathrooms) || undefined,
+        price: price && Number(price),
+        bedrooms: bedrooms && Number(bedrooms),
+        bathrooms: bathrooms && Number(bathrooms),
         ...rest,
       };
 
