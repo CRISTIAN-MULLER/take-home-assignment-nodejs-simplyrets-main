@@ -1,4 +1,11 @@
+import { IsNumber, IsOptional } from 'class-validator';
+
 export class PaginationOptionsDto {
-  perPage!: number;
-  page!: number;
+  @IsNumber()
+  @IsOptional()
+  perPage?: number;
+
+  @IsNumber()
+  @IsOptional()
+  page?: number;
 }

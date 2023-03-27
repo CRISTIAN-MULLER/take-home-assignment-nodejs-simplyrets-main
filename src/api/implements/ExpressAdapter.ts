@@ -28,16 +28,23 @@ export class ExpressAdapter implements HttpServer {
     this.app[method](url, async (req: Request, res: Response) => {
       const urlParams = req.params;
       const body = req.body;
-      const queryParams = req.query;
+      const { perPage, page, price, bedrooms, bathrooms, ...rest } = req.query;
+
       const paginationOptions = {
-        perPage: queryParams.perPage || 10,
-        page: queryParams.page || 1,
+        perPage: Number(perPage) || 10,
+        page: Number(page) || 1,
+      };
+      const filters = {
+        price: Number(price) || undefined,
+        bedrooms: Number(bedrooms) || undefined,
+        bathrooms: Number(bathrooms) || undefined,
+        ...rest,
       };
 
       const response = await callback(
         urlParams,
         body,
-        queryParams,
+        filters,
         paginationOptions,
       );
       res.json(response);

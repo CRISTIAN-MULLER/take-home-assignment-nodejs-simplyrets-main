@@ -6,7 +6,7 @@ import {
   UpdatePropertyDTO,
 } from '@dtos';
 import { ValidationService } from 'utils/Validation';
-import { PaginationOptionsDto } from 'dtos/PaginationOptionsDTO';
+import { PaginationOptionsDto } from '@dtos';
 
 export class PropertiesController {
   constructor(
@@ -19,6 +19,11 @@ export class PropertiesController {
     paginationOptions: PaginationOptionsDto,
   ): Promise<PropertiesResponseDto> {
     try {
+      const newFilters = new PropertiesFilterDTO();
+      const newPagination = new PaginationOptionsDto();
+      Object.assign(newFilters, filters);
+      Object.assign(newPagination, paginationOptions);
+      await this.validation.validate(newFilters);
       const properties = await this.propertyService.findAll(
         filters,
         paginationOptions,
