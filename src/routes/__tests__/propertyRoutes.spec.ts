@@ -30,6 +30,21 @@ describe('propertyRoutes', () => {
       expect(response.status).toBe(200);
     });
 
+    it('should fails returning properties with worng filters', async () => {
+      const response = await request(httpServer).get('/properties?price=text');
+      expect(response.status).toBe(400);
+    });
+
+    it('should create a property successfully', async () => {
+      const { body } = await request(httpServer)
+        .post('/property')
+        .send(mockProperty)
+        .expect('Content-Type', /json/);
+      expect(body.status).toBe(201);
+      expect(body.response).toBeDefined();
+      expect(body.error).not.toBeDefined();
+    });
+
     it('should create a property successfully', async () => {
       const { body } = await request(httpServer)
         .post('/property')

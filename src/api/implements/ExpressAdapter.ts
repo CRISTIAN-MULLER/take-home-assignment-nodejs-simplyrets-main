@@ -47,7 +47,7 @@ export class ExpressAdapter implements HttpServer {
         filters,
         paginationOptions,
       );
-      res.json(response);
+      res.status(response.status).json(response);
     });
   }
   listen(port: number): void {
