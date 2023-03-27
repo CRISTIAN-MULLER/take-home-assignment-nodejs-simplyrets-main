@@ -31,7 +31,7 @@ export class ExpressAdapter implements HttpServer {
       const queryParams = req.query;
       const paginationOptions = {
         perPage: queryParams.perPage || 10,
-        page: queryParams.page || 0,
+        page: queryParams.page || 1,
       };
 
       const response = await callback(
