@@ -11,6 +11,17 @@
     "strict": true,
     "skipLibCheck": true,
     "strictPropertyInitialization": false,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@api": ["./api"],
+      "@controllers": ["./controllers"],
+      "@dtos": ["./dtos"],
+      "@entities": ["./entities"],
+      "@repositories": ["./repositories"],
+      "@services": ["./services"],
+      "@routes": ["./routes"],
+      "@utils": ["./utils"]
+    }
   }
 }
