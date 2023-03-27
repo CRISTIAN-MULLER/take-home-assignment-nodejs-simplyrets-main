@@ -1,19 +1,20 @@
-import app from './app';
-import AppDataSource, { seedDb } from './dataSource';
+import 'module-alias/register';
+import { App } from './app';
 
-const PORT = process.env.PORT || 3000;
+const app = new App();
 
 (async () => {
   try {
-    await AppDataSource.initialize();
+    await app.initializeDataSource();
     console.log('Database connected');
 
-    await seedDb();
+    await app.initializeDataBase();
     console.log('Database populated with test data');
+    //initialize routes
+    await app.initializeRoutes();
 
-    app.listen(PORT, () => {
-      console.log(`Server started on port ${PORT}`);
-    });
+    //initialize server
+    await app.initializeHttpServer();
   } catch (error) {
     console.error('Failed to start the server', error);
     process.exit(1);
