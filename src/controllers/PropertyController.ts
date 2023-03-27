@@ -30,11 +30,11 @@ export class PropertiesController {
       );
 
       return properties;
-    } catch (error) {
+    } catch (error: any) {
       const response = {
         status: 400,
         response: `An error occurred while find properties`,
-        error,
+        error: error.message ? error.message : error,
       };
       return response;
     }
@@ -53,7 +53,7 @@ export class PropertiesController {
       const response = {
         status: 400,
         response: `An error occurred while find properties`,
-        error: error,
+        error: error.message ? error.message : error,
       };
       return response;
     }
@@ -71,11 +71,11 @@ export class PropertiesController {
         response: 'Property created successfully',
       };
       return response;
-    } catch (error) {
+    } catch (error: any) {
       const response = {
         status: 400,
         response: `An error occurred while creating a new property`,
-        error,
+        error: error.message ? error.message : error,
       };
       return response;
     }
@@ -103,7 +103,7 @@ export class PropertiesController {
       const response = {
         status: 400,
         response: `An error occurred while updating a property`,
-        error,
+        error: error.message ? error.message : error,
       };
       return response;
     }
@@ -118,11 +118,11 @@ export class PropertiesController {
         response: 'Property deleted with success.',
       };
       return response;
-    } catch (error) {
+    } catch (error: any) {
       const response = {
         status: 400,
         response: `An error occurred while deleting a property`,
-        error,
+        error: error.message ? error.message : error,
       };
       return response;
     }

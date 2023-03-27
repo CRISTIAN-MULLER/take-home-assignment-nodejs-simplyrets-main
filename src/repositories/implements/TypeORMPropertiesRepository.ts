@@ -74,7 +74,6 @@ export class TypeORMPropertiesRepository implements PropertiesRepository {
     const property = await this.propertyRepository.findOneByOrFail({
       id: propertyId,
     });
-
     return property;
   }
 

@@ -28,9 +28,12 @@ export class App {
   }
 
   async initializeRoutes() {
+    // this can be used to test database like functions using a InMeory strategy
+    // is helpfull to do a quick test
+
     //const propertiesRepository = new InMemoryPropertiesRepository();
-    const validationService = new ValidationService();
     const propertiesRepository = new TypeORMPropertiesRepository(AppDataSource);
+    const validationService = new ValidationService();
     const propertyService = new PropertyService(propertiesRepository);
     const propertiesController = new PropertiesController(
       propertyService,
