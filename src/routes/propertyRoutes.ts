@@ -1,26 +1,83 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import { HttpMethods, HttpServer } from '@api';
+import { PropertiesController } from '@controllers';
+import { CreatePropertyDTO } from '@dtos';
+import { PropertiesFilterDTO } from '@dtos';
+import { PaginationOptionsDto } from 'dtos/PaginationOptionsDTO';
+
+interface PropertiesRouterProps {
+  httpServer: HttpServer;
+  propertiesController: PropertiesController;
+}
 
 export const propertyRoutes = express.Router();
 
 propertyRoutes.use(bodyParser.json());
 
-propertyRoutes.get('/', async (req, res) => {
-  res.send('GET all properties');
-});
+export class PropertyRouter {
+  private httpServer!: HttpServer;
+  private propertiesController!: PropertiesController;
 
-propertyRoutes.get('/:id', async (req, res) => {
-  res.send('GET property by id');
-});
+  constructor(private props: PropertiesRouterProps) {
+    Object.assign(this, this.props);
+  }
 
-propertyRoutes.post('/', async (req, res) => {
-  res.send('Create property');
-});
+  async init() {
+    this.httpServer.on(
+      HttpMethods.GET,
+      '/properties',
+      async (
+        params: any,
+        body: any,
+        filters: PropertiesFilterDTO,
+        paginationOptions: PaginationOptionsDto,
+      ) => {
+        const response = await this.propertiesController.findAll(
+          filters,
+          paginationOptions,
+        );
+        return response;
+      },
+    );
 
-propertyRoutes.put('/:id', async (req, res) => {
-  res.send('Update property');
-});
+    this.httpServer.on(
+      HttpMethods.GET,
+      '/property/:id',
+      async (params: any) => {
+        const response = await this.propertiesController.findOneById(params.id);
+        return response;
+      },
+    );
 
-propertyRoutes.delete('/:id', async (req, res) => {
-  res.send('Delete property');
-});
+    this.httpServer.on(
+      HttpMethods.POST,
+      '/property',
+      async (params: any, body: CreatePropertyDTO) => {
+        const response = await this.propertiesController.create(body);
+        return response;
+      },
+    );
+
+    this.httpServer.on(
+      HttpMethods.PUT,
+      '/property/:id',
+      async (params: any, body: CreatePropertyDTO) => {
+        const response = await this.propertiesController.update(
+          params.id,
+          body,
+        );
+        return response;
+      },
+    );
+
+    this.httpServer.on(
+      HttpMethods.DELETE,
+      '/property/:id',
+      async (params: any, body: CreatePropertyDTO) => {
+        const response = await this.propertiesController.delete(params.id);
+        return response;
+      },
+    );
+  }
+}
