@@ -52,7 +52,11 @@ export class PropertyService {
   }
 
   async delete(propertyId: number): Promise<void> {
-    await this.propertiesRepository.delete(propertyId);
-    return;
+    try {
+      await this.propertiesRepository.delete(propertyId);
+      return;
+    } catch (error) {
+      throw new Error(JSON.stringify(error));
+    }
   }
 }

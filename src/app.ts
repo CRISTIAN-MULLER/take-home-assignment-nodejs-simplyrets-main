@@ -1,6 +1,9 @@
 import { ExpressAdapter, HttpServer, Router } from '@api';
 import { PropertiesController } from '@controllers';
-import { TypeORMPropertiesRepository } from '@repositories';
+import {
+  InMemoryPropertiesRepository,
+  TypeORMPropertiesRepository,
+} from '@repositories';
 import { PropertyService } from '@services';
 import { ValidationService } from '@utils';
 

@@ -110,7 +110,7 @@ export class InMemoryPropertiesRepository implements PropertiesRepository {
 
   findOneById(propertyId: number): Promise<Property> {
     const foundProperty = this.propertiesData.find(
-      (property) => property.id === propertyId,
+      (property) => property.id === Number(propertyId),
     );
     return new Promise((resolve, reject) => {
       if (foundProperty) {

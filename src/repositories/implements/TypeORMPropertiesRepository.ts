@@ -95,8 +95,12 @@ export class TypeORMPropertiesRepository implements PropertiesRepository {
   }
 
   async delete(propertyId: number): Promise<void> {
-    await this.propertyRepository.delete({
+    const { affected } = await this.propertyRepository.delete({
       id: propertyId,
     });
+
+    if (!affected) {
+      throw new Error('Property not found');
+    }
   }
 }
