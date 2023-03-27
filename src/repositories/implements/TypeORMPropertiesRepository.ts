@@ -9,7 +9,6 @@ export class TypeORMPropertiesRepository implements PropertiesRepository {
   private queryBuilder: SelectQueryBuilder<Property>;
   constructor(private dataSource: DataSource) {
     this.propertyRepository = dataSource.getRepository(Property);
-    this.queryBuilder = this.propertyRepository.createQueryBuilder('property');
   }
 
   async findAll(
@@ -18,6 +17,7 @@ export class TypeORMPropertiesRepository implements PropertiesRepository {
   ): Promise<PropertiesResponseDto> {
     // typeorm will sanitize all properties because we are no using raw query
     // no problem with sql injection here
+    this.queryBuilder = this.propertyRepository.createQueryBuilder('property');
     if (filters.address) {
       this.queryBuilder.andWhere('property.address like :address', {
         address: `%${filters.address}%`,
@@ -63,6 +63,7 @@ export class TypeORMPropertiesRepository implements PropertiesRepository {
       status: 200,
       response: 'Sucessfull response',
       currentPage: paginationOptions.page,
+      perPage: paginationOptions.perPage,
       lastPage: lastPagee,
       totalItems: total,
     };
